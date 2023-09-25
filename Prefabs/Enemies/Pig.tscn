@@ -1,0 +1,129 @@
+[gd_scene load_steps=11 format=3 uid="uid://dyi5enkty7jbd"]
+
+[ext_resource type="Script" path="res://Scripts/Enemies/Pig/Pig.cs" id="1_8vknv"]
+[ext_resource type="Texture2D" uid="uid://bo3tbldh6ispl" path="res://Art/Enemies/Pig/Pig1.png" id="2_4wdmr"]
+[ext_resource type="Texture2D" uid="uid://bpcxvcocuxd1r" path="res://Art/Enemies/Pig/Pig2.png" id="3_p58dv"]
+[ext_resource type="PackedScene" uid="uid://boytj7vh2hmpb" path="res://Prefabs/components/hitbox-component.tscn" id="3_xhs7x"]
+[ext_resource type="PackedScene" uid="uid://b77ikgefpn0e6" path="res://Prefabs/components/health-component.tscn" id="5_fdttl"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3q6bb"]
+radius = 33.0151
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_k7rpl"]
+radius = 25.0
+
+[sub_resource type="Animation" id="Animation_mhtfg"]
+resource_name = "Run"
+length = 0.5
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PigSprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("2_4wdmr"), ExtResource("3_p58dv"), ExtResource("2_4wdmr")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PigSprite:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -5), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PigSprite:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.05, 0.05), Vector2(0.05, 0.05), Vector2(0.05, 0.05)]
+}
+
+[sub_resource type="Animation" id="Animation_b5jyw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PigSprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_4wdmr")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PigSprite:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PigSprite:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.05, 0.05)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_inuhm"]
+_data = {
+"RESET": SubResource("Animation_b5jyw"),
+"Run": SubResource("Animation_mhtfg")
+}
+
+[node name="Pig" type="CharacterBody2D" node_paths=PackedStringArray("animationPlayer", "enemySprite")]
+z_index = 3
+collision_layer = 2
+collision_mask = 2
+motion_mode = 1
+script = ExtResource("1_8vknv")
+animationPlayer = NodePath("AnimationPlayer")
+enemySprite = NodePath("PigSprite")
+
+[node name="PigSprite" type="Sprite2D" parent="."]
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("2_4wdmr")
+
+[node name="HitBox" parent="." instance=ExtResource("3_xhs7x")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+shape = SubResource("CircleShape2D_3q6bb")
+debug_color = Color(0.94902, 0, 0.564706, 0.419608)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_k7rpl")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_inuhm")
+}
+
+[node name="health-component" parent="." instance=ExtResource("5_fdttl")]
