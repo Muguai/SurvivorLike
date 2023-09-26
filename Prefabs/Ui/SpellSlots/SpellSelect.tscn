@@ -1,0 +1,73 @@
+[gd_scene load_steps=2 format=3 uid="uid://cn6y2k3eka0i5"]
+
+[ext_resource type="Texture2D" uid="uid://dmryunbnbvnq5" path="res://icon.svg" id="1_mmkvr"]
+
+[node name="SpellSelect" type="Control"]
+layout_mode = 3
+anchor_right = 0.868
+anchor_bottom = 0.449
+offset_right = 0.0639648
+offset_bottom = 0.0479736
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="PanelContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="PanelContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+texture = ExtResource("1_mmkvr")
+expand_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Hello"
+fit_content = true
+
+[node name="Control" type="Control" parent="PanelContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="Node" type="Node" parent="PanelContainer/HBoxContainer"]
+
+[node name="TextureRect2" type="TextureRect" parent="PanelContainer/HBoxContainer/Node"]
+offset_top = -295.0
+offset_right = 128.0
+offset_bottom = -4.0
+texture = ExtResource("1_mmkvr")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/HBoxContainer/Node"]
+offset_top = -163.0
+offset_right = 1.0
+offset_bottom = 128.0
+text = "Hello"
+fit_content = true
+
+[node name="TextureRect3" type="TextureRect" parent="PanelContainer/HBoxContainer/Node"]
+offset_top = -136.0
+offset_right = 128.0
+offset_bottom = 155.0
+texture = ExtResource("1_mmkvr")
+
+[node name="ColorRect" type="ColorRect" parent="PanelContainer/HBoxContainer/Node"]
+offset_top = -4.0
+offset_bottom = 287.0

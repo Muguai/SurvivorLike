@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://cvxx7hhe1xqba"]
+
+[ext_resource type="Script" path="res://Scripts/Ui/SpellSlot/SlotHolder.cs" id="1_l8e6i"]
+
+[node name="SpellSlotContainer" type="HBoxContainer"]
+anchors_preset = -1
+anchor_right = 0.618924
+anchor_bottom = 0.308642
+script = ExtResource("1_l8e6i")
+metadata/_edit_use_anchors_ = true

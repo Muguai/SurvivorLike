@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Linq;
 
 public partial class Health : Node
 {
@@ -18,15 +19,19 @@ public partial class Health : Node
 
     public override void _Ready()
     {
+        /*
         opacityTween = new Tween();
         AddChild(opacityTween);
 
         opacityTween.Connect("tween_completed", this, "_on_TweenCompleted");
+        */
     }
 
     public override void _Process(double delta)
     {
         InvincibilityTimer += delta;
+
+        /*
 
         if (InvincibilityTimer < InvincibilityFrames)
         {
@@ -45,6 +50,7 @@ public partial class Health : Node
             flickerSprite.Modulate = new Color(1, 1, 1, 1);
             opacityTween.Stop(flickerSprite);
         }
+        */
     }
 
     public void Damage(int amount)
@@ -57,7 +63,9 @@ public partial class Health : Node
         InvincibilityTimer = 0;
         if (Hp < 1)
         {
-            GetParent().QueueFree();
+            StateMachine sm = GetParent().GetNode<StateMachine>("StateMachine");
+            sm.ChangeState( GetParent().Name +  "Death");
+            QueueFree();
         }
     }
 

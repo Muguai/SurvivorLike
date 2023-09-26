@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://88lk7s3kk56j"]
+[gd_scene load_steps=14 format=3 uid="uid://88lk7s3kk56j"]
 
 [ext_resource type="Script" path="res://Scripts/PlayerMovement.cs" id="1_vmgav"]
 [ext_resource type="Texture2D" uid="uid://d0fx5bdfinixv" path="res://Art/Player/Idle.png" id="2_4k8r6"]
@@ -7,8 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://b77ikgefpn0e6" path="res://Prefabs/components/health-component.tscn" id="5_gy2om"]
 [ext_resource type="Script" path="res://Scripts/Player/PSM/PlayerStateMachine.cs" id="6_1kq3t"]
 [ext_resource type="Script" path="res://Scripts/Player/PSM/States/PlayerIdle.cs" id="7_20qvf"]
-[ext_resource type="Script" path="res://Scripts/Player/PSM/States/PlayerRun.cs" id="8_py3ph"]
-[ext_resource type="Script" path="res://Scripts/Player/PSM/States/PlayerDeath.cs" id="9_q12c8"]
+[ext_resource type="Script" path="res://Scripts/Player/PSM/States/PlayerWalk.cs" id="8_8ghv6"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_l8pvx"]
 radius = 40.0
@@ -177,22 +176,18 @@ _data = {
 "Run": SubResource("Animation_3a1vp")
 }
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("playerSprite")]
 z_index = 2
 position = Vector2(-1, 0)
 scale = Vector2(0.7, 0.7)
 motion_mode = 1
 script = ExtResource("1_vmgav")
+playerSprite = NodePath("PlayerSprite")
 
 [node name="PlayerSprite" type="Sprite2D" parent="."]
 modulate = Color(0.94902, 0.94902, 0.960784, 1)
 scale = Vector2(0.1, 0.1)
 texture = ExtResource("2_4k8r6")
-
-[node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(1.7, 1.7)
-process_callback = 0
-position_smoothing_enabled = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, 20)
@@ -203,23 +198,24 @@ libraries = {
 "": SubResource("AnimationLibrary_at1fe")
 }
 
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(1.7, 1.7)
+position_smoothing_enabled = true
+
 [node name="health-component" parent="." instance=ExtResource("5_gy2om")]
-Hp = null
+Hp = 5
 InvincibilityFrames = 3.0
 
-[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("_Player", "anim")]
+[node name="PlayerStateMachine" type="Node" parent="." node_paths=PackedStringArray("_Player", "anim")]
 script = ExtResource("6_1kq3t")
 _Player = NodePath("..")
 anim = NodePath("../AnimationPlayer")
 
-[node name="States" type="Node" parent="StateMachine"]
+[node name="States" type="Node" parent="PlayerStateMachine"]
 
-[node name="PlayerIdle" type="Node" parent="StateMachine/States"]
+[node name="PlayerIdle" type="Node" parent="PlayerStateMachine/States"]
 script = ExtResource("7_20qvf")
 
-[node name="PlayerRun" type="Node" parent="StateMachine/States" node_paths=PackedStringArray("playerSprite")]
-script = ExtResource("8_py3ph")
+[node name="PlayerWalk" type="Node" parent="PlayerStateMachine/States" node_paths=PackedStringArray("playerSprite")]
+script = ExtResource("8_8ghv6")
 playerSprite = NodePath("../../../PlayerSprite")
-
-[node name="PlayerDeath" type="Node" parent="StateMachine/States"]
-script = ExtResource("9_q12c8")

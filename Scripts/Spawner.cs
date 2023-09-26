@@ -52,13 +52,12 @@ public partial class Spawner : Node
 
 	public void SpawnEnemy(string enemyName){
 		Vector2 vec;
+
 		while(true){
 			vec = getRandomSpawnPos();
 			if(player.Position.DistanceSquaredTo(vec) > (minDistance * minDistance))
 				break;
 		}
-		
-
 
 		string path = "res://Prefabs/Enemies/" + enemyName + ".tscn";
 		var packedScene = GD.Load<PackedScene>(path);

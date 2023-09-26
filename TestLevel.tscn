@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://qnho6hnxbhw5"]
+[gd_scene load_steps=7 format=3 uid="uid://qnho6hnxbhw5"]
 
 [ext_resource type="PackedScene" uid="uid://88lk7s3kk56j" path="res://Prefabs/Player.tscn" id="1_tkawp"]
 [ext_resource type="Texture2D" uid="uid://bnegyaluey5py" path="res://Art/FlatTilemapFront.png" id="2_lofau"]
 [ext_resource type="Script" path="res://Scripts/Spawner.cs" id="3_ljn4t"]
+[ext_resource type="PackedScene" uid="uid://cvxx7hhe1xqba" path="res://Prefabs/Ui/SpellSlots/SlotHolder.tscn" id="4_wmm55"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_b8uww"]
 texture = ExtResource("2_lofau")
@@ -725,3 +726,22 @@ position = Vector2(-1382, 540)
 
 [node name="Right" type="Node2D" parent="Spawner"]
 position = Vector2(1634, 526)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SpellSlotContainer" parent="CanvasLayer/Control" instance=ExtResource("4_wmm55")]
+layout_mode = 1
+anchor_left = 0.3
+anchor_top = 0.1
+anchor_right = 11.8208
+anchor_bottom = 3.325
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 10.1667
+offset_bottom = 10.0
