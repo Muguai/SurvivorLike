@@ -9,6 +9,7 @@ public partial class Hitbox : Area2D
 	public int damageAmount {get; set;} = 1;
 
 	public void _on_body_entered(Node2D body){
+		GD.Print("Body");
 		Health hp = body.GetChildren().FirstOrDefault(child => child is Health) as Health;
 		if(hp != null)
 			hp.Damage(damageAmount);

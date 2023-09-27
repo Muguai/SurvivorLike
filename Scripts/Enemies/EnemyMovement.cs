@@ -5,7 +5,7 @@ public partial class EnemyMovement : CharacterBody2D
 {
 	[Export]
 	Sprite2D enemySprite;
-	public PlayerMovement player {get; set;}
+	public CharacterBody2D player {get; set;}
 
 	public void MoveEnemyTowardsPlayer(float Speed){
 		Vector2 velocity = Velocity;

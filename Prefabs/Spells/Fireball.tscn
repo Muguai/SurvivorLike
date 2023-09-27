@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=3 uid="uid://bthfj1mpu67ob"]
+
+[ext_resource type="PackedScene" uid="uid://biiogao2ixgqx" path="res://Particle Effect/FireballParticle.tscn" id="1_ltiyw"]
+[ext_resource type="Script" path="res://Scripts/Spells/Fireball.cs" id="1_udvpw"]
+[ext_resource type="PackedScene" uid="uid://be3vb75png1bt" path="res://Particle Effect/FireballExplosion.tscn" id="2_cfd26"]
+[ext_resource type="PackedScene" uid="uid://boytj7vh2hmpb" path="res://Prefabs/components/hitbox-component.tscn" id="3_0vych"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_grdap"]
+radius = 16.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jqs0i"]
+radius = 55.0
+
+[node name="Fireball" type="Node2D"]
+z_index = 4
+script = ExtResource("1_udvpw")
+SpellName = null
+
+[node name="FireballParticle" parent="." instance=ExtResource("1_ltiyw")]
+z_index = 4
+
+[node name="FireBallSprite" type="Sprite2D" parent="."]
+
+[node name="FireballExplosion" parent="." instance=ExtResource("2_cfd26")]
+
+[node name="CollideBox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollideBox"]
+shape = SubResource("CircleShape2D_grdap")
+debug_color = Color(0.964706, 0, 0.47451, 0.419608)
+
+[node name="HitBox" parent="." instance=ExtResource("3_0vych")]
+collision_layer = 2
+collision_mask = 2
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+shape = SubResource("CircleShape2D_jqs0i")
+
+[connection signal="body_entered" from="CollideBox" to="." method="_on_collide_box_body_entered"]

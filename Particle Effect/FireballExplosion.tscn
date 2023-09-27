@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=3 uid="uid://be3vb75png1bt"]
+
+[ext_resource type="Texture2D" uid="uid://mavkywl00s57" path="res://Art/Spells/FireballParticleTexture.png" id="1_dmac3"]
+
+[sub_resource type="Gradient" id="Gradient_7v6mr"]
+offsets = PackedFloat32Array(0, 0.385185, 0.822222)
+colors = PackedColorArray(1, 0.294118, 0, 0.4, 1, 0.678431, 0, 0.521569, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_66kra"]
+gradient = SubResource("Gradient_7v6mr")
+
+[sub_resource type="Curve" id="Curve_s5h6h"]
+_data = [Vector2(0, 0.252632), 0.0, 0.0, 0, 0, Vector2(0.487952, 0.452632), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_3tf8q"]
+curve = SubResource("Curve_s5h6h")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_u38ej"]
+particle_flag_disable_z = true
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 70.0
+initial_velocity_max = 80.0
+angular_velocity_max = 10.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+damping_min = 0.1
+damping_max = 1.0
+scale_min = 0.3
+scale_max = 0.3
+scale_curve = SubResource("CurveTexture_3tf8q")
+color_ramp = SubResource("GradientTexture1D_66kra")
+
+[node name="FireballExplosion" type="GPUParticles2D"]
+emitting = false
+amount = 60
+process_material = SubResource("ParticleProcessMaterial_u38ej")
+texture = ExtResource("1_dmac3")
+lifetime = 0.7
+one_shot = true
+speed_scale = 2.0
+randomness = 1.0
+visibility_rect = Rect2(-319.853, -317.754, 638.863, 637.56)

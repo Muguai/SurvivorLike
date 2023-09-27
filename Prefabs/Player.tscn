@@ -177,11 +177,12 @@ _data = {
 "Run": SubResource("Animation_3a1vp")
 }
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
 z_index = 2
 position = Vector2(-1, 0)
 scale = Vector2(0.7, 0.7)
 motion_mode = 1
+wall_min_slide_angle = 0.0
 script = ExtResource("1_vmgav")
 
 [node name="PlayerSprite" type="Sprite2D" parent="."]
@@ -204,7 +205,7 @@ libraries = {
 }
 
 [node name="health-component" parent="." instance=ExtResource("5_gy2om")]
-Hp = null
+DeathState = "PlayerDeath"
 InvincibilityFrames = 3.0
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("_Player", "anim")]

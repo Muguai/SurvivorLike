@@ -6,12 +6,16 @@ using System.Linq;
 public partial class Spawner : Node
 {
 	public List<Node2D> spawnPoints;
-	[Export] public PlayerMovement player;
+	[Export] public CharacterBody2D player;
 
 	private float minDistance = 500f;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		if(player == null){
+			player = this.GetParent().GetNode<CharacterBody2D>("Player");
+		}
+
 		var points = GetChildren().Where(child => child is Node2D).Select(child => child).Cast<Node2D>(); 
 
 		spawnPoints = new List<Node2D>();
@@ -29,8 +33,6 @@ public partial class Spawner : Node
 		int Y = r.Next((int)spawnPoints[0].Position.Y,(int)spawnPoints[1].Position.Y );
 
 		Vector2 spawnPos = new (X, Y);
-		
-		GD.Print(spawnPos);
 
 		return spawnPos;
 	}

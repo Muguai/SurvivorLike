@@ -1,0 +1,58 @@
+[gd_scene load_steps=8 format=3 uid="uid://biiogao2ixgqx"]
+
+[ext_resource type="Texture2D" uid="uid://mavkywl00s57" path="res://Art/Spells/FireballParticleTexture.png" id="1_t7mx2"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_thjqa"]
+
+[sub_resource type="Gradient" id="Gradient_e21pp"]
+offsets = PackedFloat32Array(0.162963, 0.422222, 0.837037)
+colors = PackedColorArray(0.960784, 0.662745, 0, 0.407843, 0.921569, 0.388235, 0, 0.486275, 0.917647, 0.207843, 0, 0.592157)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_xyqra"]
+gradient = SubResource("Gradient_e21pp")
+
+[sub_resource type="Curve" id="Curve_thll3"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.336842), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_lt5tp"]
+curve = SubResource("Curve_thll3")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ewqjk"]
+lifetime_randomness = 0.01
+particle_flag_rotate_y = true
+particle_flag_disable_z = true
+direction = Vector3(0, 0, 0)
+spread = 70.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_max = 1.0
+orbit_velocity_min = 0.01
+orbit_velocity_max = 0.02
+tangential_accel_max = 5.0
+damping_min = 0.1
+damping_max = 1.0
+angle_max = 360.0
+scale_min = 0.1
+scale_max = 0.1
+scale_curve = SubResource("CurveTexture_lt5tp")
+color_ramp = SubResource("GradientTexture1D_xyqra")
+hue_variation_min = -0.01
+hue_variation_max = 0.01
+turbulence_enabled = true
+turbulence_noise_strength = 8.63
+turbulence_noise_scale = 5.75
+turbulence_noise_speed_random = 2.15
+turbulence_influence_min = 0.01
+turbulence_influence_max = 0.33
+turbulence_initial_displacement_min = -1.0
+turbulence_initial_displacement_max = 1.0
+
+[node name="FireballParticle" type="GPUParticles2D"]
+material = SubResource("CanvasItemMaterial_thjqa")
+amount = 20
+process_material = SubResource("ParticleProcessMaterial_ewqjk")
+texture = ExtResource("1_t7mx2")
+lifetime = 0.4
+randomness = 1.0
+trail_sections = 2
+trail_section_subdivisions = 1

@@ -7,6 +7,10 @@ public partial class Health : Node
     [Export]
     public int Hp = 1;
 
+    
+    [Export]
+    public String DeathState = null;
+
     [Export]
     public Sprite2D flickerSprite = null;
 
@@ -55,7 +59,7 @@ public partial class Health : Node
 
     public void Damage(int amount)
     {
-        if (InvincibilityTimer < InvincibilityFrames)
+        if (InvincibilityTimer <= InvincibilityFrames)
         {
             return;
         }
@@ -64,8 +68,7 @@ public partial class Health : Node
         if (Hp < 1)
         {
             StateMachine sm = GetParent().GetNode<StateMachine>("StateMachine");
-            sm.ChangeState( GetParent().Name +  "Death");
-            QueueFree();
+            sm.ChangeState(DeathState);
         }
     }
 

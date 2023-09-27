@@ -6,6 +6,7 @@ public partial class SpellSlot : Control
     private RichTextLabel spellNameLabel;
     private RichTextLabel slotNumberLabel;
     public int slotNumber {get; set;} = 0;
+    public ISpell Spell {get; set;} = null;
     
     public override void _Ready()
     {
@@ -15,9 +16,10 @@ public partial class SpellSlot : Control
         slotNumberLabel.Text = "[center]"+slotNumber.ToString();
     }
 
-    public void UpdateSpellSlot(string spellName, Texture2D texture)
+    public void UpdateSpellSlot(ISpell spell)
     {
-        spellNameLabel.Text = "[center]"+spellName;
-        spellLogo.Texture = texture;
+        Spell = spell;
+        spellNameLabel.Text = "[center]"+spell.SpellName;
+        spellLogo.Texture = spell.SpellLogo;
     }
 }
