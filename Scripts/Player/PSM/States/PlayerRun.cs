@@ -13,7 +13,6 @@ public partial class PlayerRun : PlayerState
 	{
 		base.OnStart(message);
 		PSM.anim.Play("Run");
-		GD.Print("PlayerRun");
 	}
 
 	public override void UpdateState(double delta)

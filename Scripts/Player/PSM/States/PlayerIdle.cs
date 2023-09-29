@@ -9,7 +9,6 @@ public partial class PlayerIdle : PlayerState
 	{
 		base.OnStart(message);
 		PSM.anim.Play("Idle");
-		GD.Print("PlayerIdle");
 	}
 
 	public override void UpdateState(double delta)

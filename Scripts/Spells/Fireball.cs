@@ -52,7 +52,6 @@ public partial class Fireball : Node2D, ISpell
 	}
 	public void Cast()
 	{
-		GD.Print("------Start---------");
 		CalculateStartPos();
 		direction = (targetPosition - GlobalPosition).Normalized();
 		FireballParticle.Emitting = true;
@@ -65,14 +64,12 @@ public partial class Fireball : Node2D, ISpell
 		CharacterBody2D player = (CharacterBody2D)GetTree().GetFirstNodeInGroup("Player");
 		Vector2 direction = (targetPosition - player.Position).Normalized();
 		this.GlobalPosition = player.Position + (direction * SpawnOffest);
-		GD.Print(this.Position);
 		halfDistance = GlobalPosition.DistanceTo(targetPosition) / 2;
 		Vector2 rightVector = direction.Rotated(Mathf.Pi / 2);
 		Vector2 leftVector = -rightVector;
 
 		Random r = new Random();
 		int leftRight = r.Next(0,2);
-		GD.Print(leftRight);
 		if(leftRight == 0){
 			curveVector = leftVector;
 		}else{
@@ -81,7 +78,6 @@ public partial class Fireball : Node2D, ISpell
 
 		CurveAmplitude = (float)r.Next(0,10);
 
-	
 	}
 
 	public void Upgrade()
@@ -111,7 +107,6 @@ public partial class Fireball : Node2D, ISpell
 		
 		if (collided)
 		{
-			GD.Print("------End---------");
 			CollideBox.Monitoring = false;
 			ExplosionHitBox.Monitoring = true;
 			FireballParticle.Emitting = false;

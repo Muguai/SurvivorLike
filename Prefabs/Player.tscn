@@ -1,14 +1,15 @@
-[gd_scene load_steps=15 format=3 uid="uid://88lk7s3kk56j"]
+[gd_scene load_steps=16 format=3 uid="uid://88lk7s3kk56j"]
 
 [ext_resource type="Script" path="res://Scripts/PlayerMovement.cs" id="1_vmgav"]
 [ext_resource type="Texture2D" uid="uid://d0fx5bdfinixv" path="res://Art/Player/Idle.png" id="2_4k8r6"]
 [ext_resource type="Texture2D" uid="uid://dpmqm2x01cfr4" path="res://Art/Player/Run2.png" id="3_0pvgt"]
 [ext_resource type="Texture2D" uid="uid://jn6dhowry81" path="res://Art/Player/Run1.png" id="4_ety80"]
-[ext_resource type="PackedScene" uid="uid://b77ikgefpn0e6" path="res://Prefabs/components/health-component.tscn" id="5_gy2om"]
+[ext_resource type="PackedScene" uid="uid://b77ikgefpn0e6" path="res://Prefabs/components/Health.tscn" id="5_gy2om"]
 [ext_resource type="Script" path="res://Scripts/Player/PSM/PlayerStateMachine.cs" id="6_1kq3t"]
 [ext_resource type="Script" path="res://Scripts/Player/PSM/States/PlayerIdle.cs" id="7_20qvf"]
 [ext_resource type="Script" path="res://Scripts/Player/PSM/States/PlayerRun.cs" id="8_py3ph"]
 [ext_resource type="Script" path="res://Scripts/Player/PSM/States/PlayerDeath.cs" id="9_q12c8"]
+[ext_resource type="PackedScene" uid="uid://drhuiaiyxrtds" path="res://Prefabs/components/Stats.tscn" id="10_b7rcl"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_l8pvx"]
 radius = 40.0
@@ -205,6 +206,7 @@ libraries = {
 }
 
 [node name="health-component" parent="." instance=ExtResource("5_gy2om")]
+Hp = 1.0
 DeathState = "PlayerDeath"
 InvincibilityFrames = 3.0
 
@@ -224,3 +226,5 @@ playerSprite = NodePath("../../../PlayerSprite")
 
 [node name="PlayerDeath" type="Node" parent="StateMachine/States"]
 script = ExtResource("9_q12c8")
+
+[node name="Stats" parent="." instance=ExtResource("10_b7rcl")]

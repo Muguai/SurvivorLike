@@ -5,7 +5,7 @@ using System.Linq;
 public partial class Health : Node
 {
     [Export]
-    public int Hp = 1;
+    public float Hp = 1;
 
     
     [Export]
@@ -57,13 +57,14 @@ public partial class Health : Node
         */
     }
 
-    public void Damage(int amount)
+    public void Damage(Damage damage)
     {
         if (InvincibilityTimer <= InvincibilityFrames)
         {
             return;
         }
-        Hp -= amount;
+
+        Hp -= damage.Amount;
         InvincibilityTimer = 0;
         if (Hp < 1)
         {

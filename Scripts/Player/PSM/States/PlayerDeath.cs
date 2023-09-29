@@ -9,7 +9,6 @@ public partial class PlayerDeath : PlayerState
 	{
 		base.OnStart(message);
         PSM.anim.Play("Idle");
-        GD.Print("PlayerDeath");
 	}
 
 	public override void UpdateState(double delta)
