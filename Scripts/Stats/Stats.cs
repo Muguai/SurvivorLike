@@ -11,54 +11,30 @@ public partial class Stats : Node
 	[Export]
 	public Godot.Collections.Array<DamageType> Types { get; set; }
 	[Export]
-	public DamageSource Source { get; set; }
+	public Godot.Collections.Array<DamageSource> Sources { get; set; }
 	[Export]
 	public float LifeStealPercentage { get; set; }
 	[Export]
 	public float CriticalDamageMultiplier { get; set; }
-	public Dictionary<DamageType, float> DamageTypeMultipliers {get;set;}
+	[Export]
+	public float CritChance { get; set; } = 0.0f;
 
-
-	public Stats(float damage = 0f, float knockback = 0f, Godot.Collections.Array<DamageType> types = null, DamageSource source = DamageSource.None, float lifeStealPercentage = 0f, float criticalDamageMultiplier = 1f)
+	[Export]
+	public float Speed { get; set; } = 300.0f;
+	/*
+	public Stats()
 	{
-		Damage = damage;
-		Knockback = knockback;
-		Types = types ?? new Godot.Collections.Array<DamageType>();
-		Source = source;
-		LifeStealPercentage = lifeStealPercentage;
-		CriticalDamageMultiplier = criticalDamageMultiplier;
-	
-		DamageTypeMultipliers = new();
-		foreach (DamageType type in Enum.GetValues(typeof(DamageType)))
-		{
-			DamageTypeMultipliers[type] = 1.0f;
-		}
-	}
-
-	 public Stats()
-	{
+		GD.Print("WTF");
 		Damage = 0f;
 		Knockback = 0f;
 		Types = new Godot.Collections.Array<DamageType>();
-		Source = DamageSource.None;
+		Sources = new Godot.Collections.Array<DamageSource>();
 		LifeStealPercentage = 0f;
 		CriticalDamageMultiplier = 1f;
-		DamageTypeMultipliers = new();
-		foreach (DamageType type in Enum.GetValues(typeof(DamageType)))
-		{
-			DamageTypeMultipliers[type] = 1.0f;
-		}
+		CritChance = 0f;
+		Speed = 0f;
 	}
-
-	public void SetDamageTypeMultiplier(DamageType type, float multiplier)
-	{
-		DamageTypeMultipliers[type] = multiplier;
-	}
-
-	public float GetDamageTypeMultiplier(DamageType type)
-	{
-		return DamageTypeMultipliers[type];
-	}
+	*/
 
 
 	public void AddBonus(Stats bonusStats)
@@ -67,6 +43,8 @@ public partial class Stats : Node
 		Knockback += bonusStats.Knockback;
 		LifeStealPercentage += bonusStats.LifeStealPercentage;
 		CriticalDamageMultiplier += bonusStats.CriticalDamageMultiplier - 1;
+		CritChance += bonusStats.CritChance;
+		Speed += bonusStats.Speed;
 
 		foreach (var type in bonusStats.Types)
 		{
@@ -76,9 +54,25 @@ public partial class Stats : Node
 			}
 		}
 
-		if (Source == DamageSource.None)
+		foreach (var source in bonusStats.Sources)
 		{
-			Source = bonusStats.Source;
+			if (!Sources.Contains(source))
+			{
+				Sources.Add(source);
+			}
 		}
+
+	}
+
+	public override string ToString()
+	{
+		return $"Damage: {Damage}, " +
+			   $"Knockback: {Knockback}, " +
+			   $"Types: [{string.Join(", ", Types)}], " +
+			   $"Sources: [{string.Join(", ", Sources)}], " +
+			   $"LifeStealPercentage: {LifeStealPercentage}, " +
+			   $"CriticalDamageMultiplier: {CriticalDamageMultiplier}, " +
+			   $"CritChance: {CritChance}, " +
+			   $"Speed: {Speed}";
 	}
 }

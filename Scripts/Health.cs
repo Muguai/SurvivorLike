@@ -6,7 +6,6 @@ public partial class Health : Node
 {
     [Export]
     public float Hp = 1;
-
     
     [Export]
     public String DeathState = null;
@@ -19,42 +18,27 @@ public partial class Health : Node
     private double InvincibilityTimer = 0;
     private bool Invincible = true;
 
-    private Tween opacityTween;
+    
+    [Export]
+    public bool ShowDamageNumber = true;
+
 
     public override void _Ready()
     {
-        /*
-        opacityTween = new Tween();
-        AddChild(opacityTween);
-
-        opacityTween.Connect("tween_completed", this, "_on_TweenCompleted");
-        */
+        InvincibilityTimer = InvincibilityFrames;
+        
     }
 
     public override void _Process(double delta)
     {
         InvincibilityTimer += delta;
 
-        /*
-
         if (InvincibilityTimer < InvincibilityFrames)
         {
             float opacityValue = (float)Math.Abs(Math.Sin(InvincibilityTimer * 10)); 
             flickerSprite.Modulate = new Color(1, 1, 1, opacityValue);
-
-            if (!opacityTween.IsRunning())
-            {
-                opacityTween.TweenInterval(flickerSprite, "modulate:a", 0f, 1f, 0.5f,
-                    Tween.TransitionType.Sine, Tween.EaseType.InOut);
-                opacityTween.Start();
-            }
         }
-        else
-        {
-            flickerSprite.Modulate = new Color(1, 1, 1, 1);
-            opacityTween.Stop(flickerSprite);
-        }
-        */
+        
     }
 
     public void Damage(Damage damage)
@@ -71,13 +55,25 @@ public partial class Health : Node
             StateMachine sm = GetParent().GetNode<StateMachine>("StateMachine");
             sm.ChangeState(DeathState);
         }
-    }
 
-    private void _on_TweenCompleted(Object obj, string key)
-    {
-        if (key == "modulate:a")
-        {
-            flickerSprite.Modulate = new Color(1, 1, 1, 0);
+        if(ShowDamageNumber){
+            RichTextLabel damageLabel = new RichTextLabel();
+            damageLabel.Text = damage.Amount.ToString();
+            damageLabel.Size = new Vector2(200,200);
+            damageLabel.Position = new Vector2(0, -30); 
+            damageLabel.Modulate = new Color(1, 1, 1, 1);
+            damageLabel.ZIndex = 100;
+            damageLabel.AddThemeConstantOverride("outline_size", 5); 
+            damageLabel.AddThemeColorOverride("font_outline_color", new Color (0,0,0, 1));
+
+
+            GetParent().AddChild(damageLabel);
+
+            var tween = GetTree().CreateTween().BindNode(this).SetTrans(Tween.TransitionType.Expo);
+            tween.TweenProperty(damageLabel, "position", new Vector2(0, -45), 0.5f);
+            tween.TweenProperty(damageLabel, "modulate", new Color(1, 1, 1, 0), 0.5f);
+            tween.TweenCallback(Callable.From(damageLabel.QueueFree));
         }
+  
     }
 }

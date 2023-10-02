@@ -4,8 +4,6 @@ using System.Linq;
 
 public partial class Hitbox : Area2D
 {
-	[Export]
-	public int damageAmount {get; set;} = 1;
 	private Stats stat;
 
 	public override void _Ready()

@@ -7,26 +7,25 @@ public class Damage
 	public float Amount { get; set; }
 	public float Knockback { get; set; }
 	public Godot.Collections.Array<DamageType> Types { get; set; }
-	public DamageSource Source { get; set; }
+	public Godot.Collections.Array<DamageSource> Sources { get; set; }
 	public float LifeStealPercentage { get; set; }
 	public float CriticalDamageMultiplier { get; set; }
 	public bool IsCritical { get; set; }
 	public float ArmorReduceValue { get; set; } = 0.5f;
-	public Dictionary<DamageType, float> DamageTypeMultipliers { get; set; }
+	public Godot.Collections.Dictionary<DamageType, float> DamageTypeMultipliers { get; set; }
 
 
-	public Damage(Stats stat = null)
+	public Damage(Stats stat)
 	{
-		stat = stat == null ? new Stats() : stat;
 
-		this.Knockback = stat.Knockback;
-		this.Types = stat.Types;
-		this.IsCritical = IsCriticalHit(stat.CriticalDamageMultiplier - 1);
-		this.LifeStealPercentage = stat.LifeStealPercentage;
-		this.Source = stat.Source;
-		this.DamageTypeMultipliers = stat.DamageTypeMultipliers;
+		Knockback = stat.Knockback;
+		Types = stat.Types;
+		CriticalDamageMultiplier = stat.CriticalDamageMultiplier;
+		IsCritical = IsCriticalHit(stat.CritChance);
+		LifeStealPercentage = stat.LifeStealPercentage;
+		Sources = stat.Sources;
 		
-		this.Amount = CalculateFinalDamage(stat.Damage);
+		Amount = CalculateFinalDamage(stat.Damage);
 	}
 
 	private bool IsCriticalHit(float criticalChance)
@@ -51,12 +50,7 @@ public class Damage
 	public float CalculateFinalDamage(float baseDamage)
 	{
 		float finalDamage = baseDamage;
-
-		foreach (DamageType type in Types)
-		{
-			finalDamage *= DamageTypeMultipliers[type];
-		}
-
+		
 		if (IsCritical)
 		{
 			finalDamage *= CriticalDamageMultiplier;
