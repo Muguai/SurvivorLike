@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://qnho6hnxbhw5"]
+[gd_scene load_steps=13 format=3 uid="uid://qnho6hnxbhw5"]
 
 [ext_resource type="PackedScene" uid="uid://88lk7s3kk56j" path="res://Prefabs/Player.tscn" id="1_tkawp"]
 [ext_resource type="Texture2D" uid="uid://bnegyaluey5py" path="res://Art/FlatTilemapFront.png" id="2_lofau"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://Scripts/Ui/FpsCounter.cs" id="5_cu3qv"]
 [ext_resource type="Script" path="res://Scripts/Passives/PassiveSystem.cs" id="6_genxn"]
 [ext_resource type="Script" path="res://Scripts/Ui/ExperienceBar.cs" id="6_ubhr0"]
+[ext_resource type="Script" path="res://Scripts/Managers/EventManager.cs" id="8_vow1g"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_b8uww"]
 texture = ExtResource("2_lofau")
@@ -706,6 +707,14 @@ sources/0 = SubResource("TileSetAtlasSource_b8uww")
 
 [node name="TestLevel" type="Node2D"]
 
+[node name="Singeltons" type="Node" parent="."]
+
+[node name="EventManager" type="Node" parent="Singeltons"]
+script = ExtResource("8_vow1g")
+
+[node name="PassiveSystem" type="Node" parent="Singeltons"]
+script = ExtResource("6_genxn")
+
 [node name="Player" parent="." instance=ExtResource("1_tkawp")]
 position = Vector2(7, 0)
 
@@ -800,8 +809,3 @@ offset_bottom = 69.0
 theme_override_font_sizes/normal_font_size = 25
 bbcode_enabled = true
 text = "1"
-
-[node name="Singeltons" type="Node" parent="."]
-
-[node name="PassiveSystem" type="Node" parent="Singeltons"]
-script = ExtResource("6_genxn")

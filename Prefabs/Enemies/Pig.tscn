@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dyi5enkty7jbd"]
+[gd_scene load_steps=17 format=3 uid="uid://dyi5enkty7jbd"]
 
 [ext_resource type="Script" path="res://Scripts/Enemies/Pig/Pig.cs" id="1_8vknv"]
 [ext_resource type="Texture2D" uid="uid://bo3tbldh6ispl" path="res://Art/Enemies/Pig/Pig1.png" id="2_4wdmr"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://Scripts/Enemies/Pig/PSM/States/PigRun.cs" id="7_eatif"]
 [ext_resource type="Script" path="res://Scripts/Enemies/Pig/PSM/States/PigDeath.cs" id="8_ywuie"]
 [ext_resource type="PackedScene" uid="uid://drhuiaiyxrtds" path="res://Prefabs/components/Stats.tscn" id="9_r8t1p"]
+[ext_resource type="PackedScene" uid="uid://cj3ykerxmgc6j" path="res://Prefabs/components/ItemDrop.tscn" id="10_tjseg"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3q6bb"]
 radius = 33.0151
@@ -207,7 +208,7 @@ libraries = {
 "": SubResource("AnimationLibrary_inuhm")
 }
 
-[node name="health-component" parent="." instance=ExtResource("5_fdttl")]
+[node name="Health" parent="." instance=ExtResource("5_fdttl")]
 Hp = 5.0
 DeathState = "PigDeath"
 
@@ -227,10 +228,7 @@ script = ExtResource("8_ywuie")
 
 [node name="Stats" parent="." instance=ExtResource("9_r8t1p")]
 Damage = 1.0
-CriticalDamageMultiplier = 1.0
+CriticalDamageMultiplier = 1.5
 
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
-visible = false
-offset_right = 40.0
-offset_bottom = 40.0
-text = "dsa"
+[node name="ItemDrop" parent="." instance=ExtResource("10_tjseg")]
+itemsToDrop = {}

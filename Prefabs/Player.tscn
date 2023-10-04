@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://88lk7s3kk56j"]
+[gd_scene load_steps=17 format=3 uid="uid://88lk7s3kk56j"]
 
 [ext_resource type="Script" path="res://Scripts/PlayerMovement.cs" id="1_vmgav"]
 [ext_resource type="Texture2D" uid="uid://d0fx5bdfinixv" path="res://Art/Player/Idle.png" id="2_4k8r6"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://Scripts/Player/PSM/States/PlayerRun.cs" id="8_py3ph"]
 [ext_resource type="Script" path="res://Scripts/Player/PSM/States/PlayerDeath.cs" id="9_q12c8"]
 [ext_resource type="PackedScene" uid="uid://drhuiaiyxrtds" path="res://Prefabs/components/Stats.tscn" id="10_b7rcl"]
+[ext_resource type="Script" path="res://Scripts/Stats/PlayerStats.cs" id="11_2pbdc"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_l8pvx"]
 radius = 40.0
@@ -230,3 +231,5 @@ playerSprite = NodePath("../../../PlayerSprite")
 script = ExtResource("9_q12c8")
 
 [node name="Stats" parent="." instance=ExtResource("10_b7rcl")]
+script = ExtResource("11_2pbdc")
+Level = 1

@@ -42,7 +42,9 @@ public partial class Stats : Node
 		Damage += bonusStats.Damage;
 		Knockback += bonusStats.Knockback;
 		LifeStealPercentage += bonusStats.LifeStealPercentage;
-		CriticalDamageMultiplier += bonusStats.CriticalDamageMultiplier - 1;
+		if(bonusStats.CriticalDamageMultiplier > 1){
+			CriticalDamageMultiplier += bonusStats.CriticalDamageMultiplier - 1;
+		}
 		CritChance += bonusStats.CritChance;
 		Speed += bonusStats.Speed;
 

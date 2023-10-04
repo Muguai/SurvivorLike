@@ -98,9 +98,15 @@ CollideBox = NodePath("CollideBox")
 ExplosionHitBox = NodePath("HitBox")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+self_modulate = Color(1, 0.654902, 0.105882, 1)
 z_index = 5
-position = Vector2(-1, 1)
-scale = Vector2(0.02, 0.02)
+position = Vector2(-1.19209e-07, 3.57628e-07)
+scale = Vector2(0.11254, 0.109489)
+texture = ExtResource("2_qcyka")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Sprite2D"]
+position = Vector2(-4.44289, 9.13333)
+scale = Vector2(0.159943, 0.146133)
 texture = ExtResource("3_rufq4")
 
 [node name="CollideBox" type="Area2D" parent="." groups=["Size"]]
@@ -153,6 +159,6 @@ local_coords = true
 Damage = 2.0
 Types = Array[int]([0])
 Sources = Array[int]([2, 3])
-CriticalDamageMultiplier = 1.0
+CriticalDamageMultiplier = 1.5
 
 [connection signal="body_entered" from="CollideBox" to="." method="_on_collide_box_body_entered"]

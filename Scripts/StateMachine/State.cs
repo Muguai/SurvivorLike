@@ -8,15 +8,15 @@ public partial class State : Node
 
 	private bool onUpdateHasFired = false;
 
-	//[Signal] public delegate void StateStartEventHandler();
+	[Signal] public delegate void StateStartEventHandler();
 	
-	//[Signal] public delegate void StateUpdatedEventHandler();
+	[Signal] public delegate void StateUpdatedEventHandler();
 	
-	//[Signal] public delegate void StateExitedEventHandler();
+	[Signal] public delegate void StateExitedEventHandler();
 
 	public virtual void OnStart(Dictionary<string, object> message)
 	{
-		//EmitSignal(nameof(StateStartEventHandler));
+		EmitSignal(SignalName.StateStart);
 		hasBeenInitialized = true;
 	}
 
@@ -24,7 +24,7 @@ public partial class State : Node
 	{
 		if(!hasBeenInitialized)
 			return;
-		//EmitSignal(nameof(StateUpdatedEventHandler));
+		EmitSignal(SignalName.StateUpdated);
 		onUpdateHasFired = true;
 	}
 
@@ -39,7 +39,7 @@ public partial class State : Node
 		if(!hasBeenInitialized)
 			return;
 
-		//EmitSignal(nameof(StateExitedEventHandler));
+		EmitSignal(SignalName.StateExited);
 		hasBeenInitialized = false;
 		onUpdateHasFired = false;
 	}
