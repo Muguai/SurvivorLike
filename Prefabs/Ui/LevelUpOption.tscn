@@ -1,0 +1,70 @@
+[gd_scene load_steps=6 format=3 uid="uid://bfoctxk66luph"]
+
+[ext_resource type="Texture2D" uid="uid://5266bhv414g5" path="res://Art/GUI/ButtonText_Large_Blank_Square.png" id="1_o8hgf"]
+[ext_resource type="Shader" path="res://Shader/LevelUpOptionBorder.gdshader" id="2_5b2qj"]
+[ext_resource type="Script" path="res://Scripts/Ui/UpgradeButton.cs" id="3_85ch3"]
+[ext_resource type="Texture2D" uid="uid://dmryunbnbvnq5" path="res://icon.svg" id="4_o6fri"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_66c8k"]
+resource_local_to_scene = true
+shader = ExtResource("2_5b2qj")
+shader_parameter/color = Color(0, 0, 0, 1)
+shader_parameter/width = 20.0
+shader_parameter/pattern = 2
+shader_parameter/inside = true
+shader_parameter/add_margins = false
+
+[node name="LevelUpOption" type="Control"]
+layout_mode = 3
+anchor_right = 0.579
+anchor_bottom = 0.335
+offset_right = 0.579834
+offset_bottom = 21.2
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+
+[node name="TextureButton" type="TextureButton" parent="."]
+material = SubResource("ShaderMaterial_66c8k")
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture_normal = ExtResource("1_o8hgf")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.914
+offset_left = 32.0
+offset_top = 34.0
+offset_right = -808.0
+offset_bottom = -2.86801
+texture = ExtResource("4_o6fri")
+expand_mode = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 350.0
+offset_top = 31.0
+offset_right = 1095.0
+offset_bottom = 327.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 70
+text = "Hello"
+fit_content = true
+scroll_following = true
+tab_size = 5
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1153.0
+offset_bottom = 362.0
+color = Color(1, 1, 1, 0)
+script = ExtResource("3_85ch3")
+changeColorOfBorder = Color(1, 1, 0, 1)
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="ColorRect" to="ColorRect" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="ColorRect" to="ColorRect" method="_on_mouse_exited"]

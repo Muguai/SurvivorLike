@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://qnho6hnxbhw5"]
+[gd_scene load_steps=14 format=3 uid="uid://qnho6hnxbhw5"]
 
 [ext_resource type="PackedScene" uid="uid://88lk7s3kk56j" path="res://Prefabs/Player.tscn" id="1_tkawp"]
 [ext_resource type="Texture2D" uid="uid://bnegyaluey5py" path="res://Art/FlatTilemapFront.png" id="2_lofau"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://Scripts/Passives/PassiveSystem.cs" id="6_genxn"]
 [ext_resource type="Script" path="res://Scripts/Ui/ExperienceBar.cs" id="6_ubhr0"]
 [ext_resource type="Script" path="res://Scripts/Managers/EventManager.cs" id="8_vow1g"]
+[ext_resource type="PackedScene" uid="uid://bv5qi3s5l3ool" path="res://Prefabs/Ui/LevelUpScreen.tscn" id="9_obeky"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_b8uww"]
 texture = ExtResource("2_lofau")
@@ -809,3 +810,5 @@ offset_bottom = 69.0
 theme_override_font_sizes/normal_font_size = 25
 bbcode_enabled = true
 text = "1"
+
+[node name="LevelUpScreen" parent="CanvasLayer" instance=ExtResource("9_obeky")]
