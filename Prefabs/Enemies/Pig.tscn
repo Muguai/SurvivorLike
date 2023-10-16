@@ -193,6 +193,7 @@ scale = Vector2(0.05, 0.05)
 texture = ExtResource("2_4wdmr")
 
 [node name="HitBox" parent="." instance=ExtResource("3_xhs7x")]
+damageAmount = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
 shape = SubResource("CircleShape2D_3q6bb")
@@ -207,6 +208,7 @@ libraries = {
 }
 
 [node name="health-component" parent="." instance=ExtResource("5_fdttl")]
+Hp = 1
 DeathState = "PigDeath"
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("_Pig", "anim")]

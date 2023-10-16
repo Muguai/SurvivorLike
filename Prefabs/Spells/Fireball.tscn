@@ -11,10 +11,13 @@ radius = 16.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_jqs0i"]
 radius = 55.0
 
-[node name="Fireball" type="Node2D"]
+[node name="Fireball" type="Node2D" node_paths=PackedStringArray("FireballParticle", "FireballExplosionParticle", "CollideBox", "ExplosionHitBox")]
 z_index = 4
 script = ExtResource("1_udvpw")
-SpellName = null
+FireballParticle = NodePath("FireballParticle")
+FireballExplosionParticle = NodePath("FireballExplosion")
+CollideBox = NodePath("CollideBox")
+ExplosionHitBox = NodePath("HitBox")
 
 [node name="FireballParticle" parent="." instance=ExtResource("1_ltiyw")]
 z_index = 4
@@ -37,6 +40,7 @@ collision_layer = 2
 collision_mask = 2
 monitoring = false
 monitorable = false
+damageAmount = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
 shape = SubResource("CircleShape2D_jqs0i")
