@@ -15,6 +15,9 @@ public partial class PassiveSystem : Node
     private Dictionary<DamageType, PassiveUpgrade> passiveUpgradesByDamageType = new();
     private Dictionary<DamageSource, PassiveUpgrade> passiveUpgradesByDamageSource = new();
     private Dictionary<string, PassiveUpgrade> passiveUpgradesBySpellName = new();
+    
+    //List of Passives
+    private List<Passive> passives = new List<Passive>();
 
     public override void _Ready()
     {
@@ -63,7 +66,24 @@ public partial class PassiveSystem : Node
         AddPassiveUpgrade(passiveUpgradesByDamageSource, source, passiveUpgrade);
     }
 
+    public void AddPassive(Passive passive){
+        passives.Add(passive);
+    }
+
     public PassiveUpgrade GetPassiveUpgrade(string spellName, Godot.Collections.Array<DamageType> types, Godot.Collections.Array<DamageSource> sources)
+    {
+        PassiveUpgrade passiveUpgrade = new PassiveUpgrade();
+
+        passiveUpgrade.AddUpgrades(GetPassiveUpgrade(spellName));
+
+        passiveUpgrade.AddUpgrades(GetPassiveUpgrade(types));
+
+        passiveUpgrade.AddUpgrades(GetPassiveUpgrade(sources));
+
+        return passiveUpgrade;
+    }
+
+    public PassiveUpgrade GetPassiveUpgrade(string spellName)
     {
         PassiveUpgrade passiveUpgrade = new PassiveUpgrade();
         PassiveUpgrade value;
@@ -73,6 +93,15 @@ public partial class PassiveSystem : Node
             passiveUpgrade.AddUpgrades(value);
         }
 
+        return passiveUpgrade;
+    }
+
+    public PassiveUpgrade GetPassiveUpgrade(Godot.Collections.Array<DamageType> types)
+    {
+
+        PassiveUpgrade passiveUpgrade = new PassiveUpgrade();
+        PassiveUpgrade value;
+
         foreach (DamageType type in types)
         {
             if (passiveUpgradesByDamageType.TryGetValue(type, out value))
@@ -80,6 +109,14 @@ public partial class PassiveSystem : Node
                 passiveUpgrade.AddUpgrades(value);
             }
         }
+
+        return passiveUpgrade;
+    }
+
+    public PassiveUpgrade GetPassiveUpgrade(Godot.Collections.Array<DamageSource> sources)
+    {
+        PassiveUpgrade passiveUpgrade = new PassiveUpgrade();
+        PassiveUpgrade value;
 
         foreach (DamageSource source in sources)
         {

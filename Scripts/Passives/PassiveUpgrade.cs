@@ -1,5 +1,7 @@
+using System;
+using Godot;
 
-public class PassiveUpgrade
+public partial class PassiveUpgrade : GodotObject
 {
     public float SizeMultipler {get; set;} = 0.0f;
     public float ExplosionSizeMultipler {get; set;} = 0.0f;
