@@ -1,0 +1,67 @@
+[gd_scene load_steps=5 format=3 uid="uid://bv5qi3s5l3ool"]
+
+[ext_resource type="Texture2D" uid="uid://rr0cpcvq61ds" path="res://Art/GUI/Box_Blank_Square.png" id="1_wq5tj"]
+[ext_resource type="PackedScene" uid="uid://bfoctxk66luph" path="res://Prefabs/Ui/LevelUpOption.tscn" id="2_gqw8o"]
+[ext_resource type="Texture2D" uid="uid://cn3ummv54walu" path="res://Art/GUI/Banner_Blank.png" id="3_7fc5a"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_80e8q"]
+content_margin_left = 109.0
+
+[node name="LevelUpScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = -0.23999
+offset_bottom = 0.23999
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -410.0
+offset_top = -333.76
+offset_right = 1113.0
+offset_bottom = 1188.24
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_wq5tj")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = -317.0
+offset_top = -185.76
+offset_right = 831.0
+offset_bottom = 905.24
+scale = Vector2(0.5, 0.5)
+alignment = 1
+
+[node name="LevelUpOption" parent="VBoxContainer" instance=ExtResource("2_gqw8o")]
+layout_mode = 2
+
+[node name="LevelUpOption2" parent="VBoxContainer" instance=ExtResource("2_gqw8o")]
+layout_mode = 2
+
+[node name="LevelUpOption3" parent="VBoxContainer" instance=ExtResource("2_gqw8o")]
+layout_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -453.0
+offset_top = -409.76
+offset_right = 1239.0
+offset_bottom = 46.24
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_7fc5a")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="TextureRect2"]
+layout_mode = 0
+offset_left = 430.0
+offset_top = 90.0
+offset_right = 1274.0
+offset_bottom = 296.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 125
+theme_override_styles/normal = SubResource("StyleBoxEmpty_80e8q")
+text = "Level Up !!!"

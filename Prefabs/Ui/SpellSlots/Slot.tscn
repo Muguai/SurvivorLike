@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://l2pddjptnqo2"]
+[gd_scene load_steps=4 format=3 uid="uid://l2pddjptnqo2"]
 
 [ext_resource type="Script" path="res://Scripts/Ui/SpellSlot/SpellSlot.cs" id="1_d8mt0"]
 [ext_resource type="Texture2D" uid="uid://dmryunbnbvnq5" path="res://icon.svg" id="1_dyd4w"]
+[ext_resource type="Texture2D" uid="uid://bqsotkcu00xwu" path="res://Art/GUI/IconButton_Small_Blank_Square.png" id="2_yhdc5"]
 
 [node name="SpellSlot" type="Control"]
 layout_mode = 3
@@ -11,25 +12,26 @@ offset_bottom = 118.0
 size_flags_horizontal = 2
 script = ExtResource("1_d8mt0")
 
-[node name="SlotBackground" type="ColorRect" parent="."]
-layout_mode = 1
-anchors_preset = -1
-offset_right = 86.0
-offset_bottom = 73.0
+[node name="SpellBackground" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 91.0
+offset_bottom = 77.0
+texture = ExtResource("2_yhdc5")
+expand_mode = 1
 
 [node name="SpellLogo" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 3.0
-offset_top = 3.0
-offset_right = 83.0
-offset_bottom = 69.0
+offset_left = 6.0
+offset_top = 6.0
+offset_right = 85.0
+offset_bottom = 71.0
 texture = ExtResource("1_dyd4w")
 expand_mode = 2
 
 [node name="SpellNameLabel" type="RichTextLabel" parent="."]
 layout_mode = 0
 offset_top = 73.0
-offset_right = 86.0
+offset_right = 91.0
 offset_bottom = 98.0
 bbcode_enabled = true
 text = "hello"
@@ -38,7 +40,7 @@ autowrap_mode = 1
 [node name="SlotNumberLabel" type="RichTextLabel" parent="."]
 layout_mode = 0
 offset_top = 94.0
-offset_right = 86.0
+offset_right = 90.0
 offset_bottom = 118.0
 bbcode_enabled = true
 text = "1"

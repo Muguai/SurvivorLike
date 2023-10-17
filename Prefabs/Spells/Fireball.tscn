@@ -1,32 +1,124 @@
-[gd_scene load_steps=7 format=3 uid="uid://bthfj1mpu67ob"]
+[gd_scene load_steps=20 format=3 uid="uid://bthfj1mpu67ob"]
 
-[ext_resource type="PackedScene" uid="uid://biiogao2ixgqx" path="res://Particle Effect/FireballParticle.tscn" id="1_ltiyw"]
 [ext_resource type="Script" path="res://Scripts/Spells/Fireball.cs" id="1_udvpw"]
-[ext_resource type="PackedScene" uid="uid://be3vb75png1bt" path="res://Particle Effect/FireballExplosion.tscn" id="2_cfd26"]
-[ext_resource type="PackedScene" uid="uid://boytj7vh2hmpb" path="res://Prefabs/components/hitbox-component.tscn" id="3_0vych"]
+[ext_resource type="Texture2D" uid="uid://ug86heegh1hw" path="res://Art/Spells/Fireball/fireball-clipart-real-16-4259534024.png" id="2_0aejd"]
+[ext_resource type="Texture2D" uid="uid://mavkywl00s57" path="res://Art/Spells/FireballParticleTexture.png" id="2_qcyka"]
+[ext_resource type="PackedScene" uid="uid://boytj7vh2hmpb" path="res://Prefabs/components/Hitbox.tscn" id="3_0vych"]
+[ext_resource type="Texture2D" uid="uid://b2jla6iikijvp" path="res://Art/Spells/Fireball/Fire.png" id="3_rufq4"]
+[ext_resource type="PackedScene" uid="uid://drhuiaiyxrtds" path="res://Prefabs/components/Stats.tscn" id="5_y2mx0"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_grdap"]
-radius = 16.0
+radius = 30.0
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_thjqa"]
+
+[sub_resource type="Gradient" id="Gradient_e21pp"]
+offsets = PackedFloat32Array(0.162963, 0.422222, 0.837037)
+colors = PackedColorArray(0.960784, 0.662745, 0, 0.407843, 0.921569, 0.388235, 0, 0.486275, 0.917647, 0.207843, 0, 0.592157)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_xyqra"]
+gradient = SubResource("Gradient_e21pp")
+
+[sub_resource type="Curve" id="Curve_thll3"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.336842), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_lt5tp"]
+curve = SubResource("Curve_thll3")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ewqjk"]
+lifetime_randomness = 0.01
+particle_flag_rotate_y = true
+particle_flag_disable_z = true
+direction = Vector3(0, 0, 0)
+spread = 70.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_max = 1.0
+orbit_velocity_min = 0.01
+orbit_velocity_max = 0.02
+tangential_accel_max = 5.0
+damping_min = 0.1
+damping_max = 1.0
+angle_max = 360.0
+scale_min = 0.1
+scale_max = 0.1
+scale_curve = SubResource("CurveTexture_lt5tp")
+color_ramp = SubResource("GradientTexture1D_xyqra")
+hue_variation_min = -0.01
+hue_variation_max = 0.01
+turbulence_enabled = true
+turbulence_noise_strength = 8.63
+turbulence_noise_scale = 5.75
+turbulence_noise_speed_random = 2.15
+turbulence_influence_min = 0.01
+turbulence_influence_max = 0.33
+turbulence_initial_displacement_min = -1.0
+turbulence_initial_displacement_max = 1.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jqs0i"]
 radius = 55.0
 
+<<<<<<< HEAD
 [node name="Fireball" type="Node2D" node_paths=PackedStringArray("FireballParticle", "FireballExplosionParticle", "CollideBox", "ExplosionHitBox")]
 z_index = 4
 script = ExtResource("1_udvpw")
 FireballParticle = NodePath("FireballParticle")
 FireballExplosionParticle = NodePath("FireballExplosion")
+=======
+[sub_resource type="Gradient" id="Gradient_7v6mr"]
+offsets = PackedFloat32Array(0, 0.385185, 0.822222)
+colors = PackedColorArray(1, 0.294118, 0, 0.4, 1, 0.678431, 0, 0.521569, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_66kra"]
+gradient = SubResource("Gradient_7v6mr")
+
+[sub_resource type="Curve" id="Curve_s5h6h"]
+_data = [Vector2(0, 0.252632), 0.0, 0.0, 0, 0, Vector2(0.487952, 0.452632), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_3tf8q"]
+curve = SubResource("Curve_s5h6h")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_u38ej"]
+particle_flag_disable_z = true
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 70.0
+initial_velocity_max = 80.0
+angular_velocity_max = 10.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+damping_min = 0.1
+damping_max = 1.0
+scale_min = 0.3
+scale_max = 0.3
+scale_curve = SubResource("CurveTexture_3tf8q")
+color_ramp = SubResource("GradientTexture1D_66kra")
+
+[node name="Fireball" type="Node2D" node_paths=PackedStringArray("FireballParticle", "FireballExplosionParticle", "CollideBox", "ExplosionHitBox")]
+z_index = 4
+script = ExtResource("1_udvpw")
+SpellLogo = ExtResource("2_0aejd")
+FireballParticle = NodePath("CollideBox/FireballParticle")
+FireballExplosionParticle = NodePath("HitBox/FireballExplosion")
+>>>>>>> 606b721a873c7100287659bbaec246cce4f3dde2
 CollideBox = NodePath("CollideBox")
 ExplosionHitBox = NodePath("HitBox")
 
-[node name="FireballParticle" parent="." instance=ExtResource("1_ltiyw")]
-z_index = 4
+[node name="Sprite2D" type="Sprite2D" parent="."]
+self_modulate = Color(1, 0.654902, 0.105882, 1)
+z_index = 5
+position = Vector2(-1.19209e-07, 3.57628e-07)
+scale = Vector2(0.11254, 0.109489)
+texture = ExtResource("2_qcyka")
 
-[node name="FireBallSprite" type="Sprite2D" parent="."]
+[node name="Sprite2D2" type="Sprite2D" parent="Sprite2D"]
+position = Vector2(-4.44289, 9.13333)
+scale = Vector2(0.159943, 0.146133)
+texture = ExtResource("3_rufq4")
 
-[node name="FireballExplosion" parent="." instance=ExtResource("2_cfd26")]
-
-[node name="CollideBox" type="Area2D" parent="."]
+[node name="CollideBox" type="Area2D" parent="." groups=["Size"]]
+scale = Vector2(0.5, 0.5)
 collision_layer = 2
 collision_mask = 2
 monitorable = false
@@ -35,7 +127,21 @@ monitorable = false
 shape = SubResource("CircleShape2D_grdap")
 debug_color = Color(0.964706, 0, 0.47451, 0.419608)
 
-[node name="HitBox" parent="." instance=ExtResource("3_0vych")]
+[node name="FireballParticle" type="GPUParticles2D" parent="CollideBox"]
+z_index = 4
+material = SubResource("CanvasItemMaterial_thjqa")
+amount = 30
+process_material = SubResource("ParticleProcessMaterial_ewqjk")
+texture = ExtResource("2_qcyka")
+lifetime = 0.4
+randomness = 1.0
+fixed_fps = 60
+draw_order = 0
+trail_sections = 2
+trail_section_subdivisions = 1
+
+[node name="HitBox" parent="." groups=["Explosion"] instance=ExtResource("3_0vych")]
+scale = Vector2(1.3, 1.3)
 collision_layer = 2
 collision_mask = 2
 monitoring = false
@@ -44,5 +150,24 @@ damageAmount = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
 shape = SubResource("CircleShape2D_jqs0i")
+
+[node name="FireballExplosion" type="GPUParticles2D" parent="HitBox" groups=["Explosion"]]
+emitting = false
+amount = 60
+process_material = SubResource("ParticleProcessMaterial_u38ej")
+texture = ExtResource("2_qcyka")
+lifetime = 0.7
+one_shot = true
+speed_scale = 2.0
+randomness = 1.0
+fixed_fps = 60
+visibility_rect = Rect2(-319.853, -317.754, 638.863, 637.56)
+local_coords = true
+
+[node name="Stats" parent="." instance=ExtResource("5_y2mx0")]
+Damage = 2.0
+Types = Array[int]([0])
+Sources = Array[int]([2, 3])
+CriticalDamageMultiplier = 1.5
 
 [connection signal="body_entered" from="CollideBox" to="." method="_on_collide_box_body_entered"]

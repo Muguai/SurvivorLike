@@ -15,6 +15,14 @@ run/main_scene="res://TestLevel.tscn"
 config/features=PackedStringArray("4.1", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
+<<<<<<< HEAD
+=======
+[display]
+
+window/size/viewport_width=1980
+window/size/viewport_height=1080
+
+>>>>>>> 606b721a873c7100287659bbaec246cce4f3dde2
 [dotnet]
 
 project/assembly_name="SurvivorLike"
