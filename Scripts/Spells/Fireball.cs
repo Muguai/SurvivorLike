@@ -1,11 +1,12 @@
 using Godot;
 using System;
+using SpellUtils;
 
-public partial class Fireball : Node2D , ISpell
+public partial class Fireball : Node2D, ISpell
 {
 	[Export]
-	public string SpellName {get; set;} = "Fireball";
-	
+	public string SpellName { get; set; } = "Fireball";
+
 	[Export]
 	public Texture2D SpellLogo { get; set; } = null;
 
@@ -22,9 +23,9 @@ public partial class Fireball : Node2D , ISpell
 	public Area2D ExplosionHitBox { get; set; }
 
 	private bool isCast = false;
-	private Vector2 targetPosition = Vector2.Zero; 
+	private Vector2 targetPosition = Vector2.Zero;
 	private Vector2 direction = Vector2.Down;
-	
+
 	private Vector2 curveVector = Vector2.Down;
 
 	[Export]
@@ -32,7 +33,7 @@ public partial class Fireball : Node2D , ISpell
 	[Export]
 	public float CurveAmplitude { get; set; } = 5.0f;
 	[Export]
-	public float CurveFrequency { get; set; } = 1.0f;  
+	public float CurveFrequency { get; set; } = 1.0f;
 
 	private bool collided = false;
 
@@ -42,10 +43,8 @@ public partial class Fireball : Node2D , ISpell
 	{
 		base._Ready();
 
-		stat = GetNode<Node>("Stats") as Stats;
-		GenericSpell spell = new GenericSpell();
-		PassiveUpgrade pu = PassiveSystem.Instance.GetPassiveUpgrade("Fireball", stat.Types, stat.Sources);
-		spell.InitializeSpell(this, stat, pu);
+		stat = GetNode<Stats>("Stats");
+		InitializeSpell.Initialize(this, stat);
 		GD.Print("Fireball stats " + stat.ToString());
 		CollideBox = GetNode<Area2D>("CollideBox");
 		ExplosionHitBox = GetNode<Area2D>("HitBox");
@@ -60,7 +59,8 @@ public partial class Fireball : Node2D , ISpell
 		isCast = true;
 	}
 
-	private void CalculateStartPos(){
+	private void CalculateStartPos()
+	{
 		targetPosition = GetGlobalMousePosition();
 		CharacterBody2D player = (CharacterBody2D)GetTree().GetFirstNodeInGroup("Player");
 		Vector2 direction = (targetPosition - player.Position).Normalized();
@@ -69,14 +69,17 @@ public partial class Fireball : Node2D , ISpell
 		Vector2 leftVector = -rightVector;
 
 		Random r = new Random();
-		int leftRight = r.Next(0,2);
-		if(leftRight == 0){
+		int leftRight = r.Next(0, 2);
+		if (leftRight == 0)
+		{
 			curveVector = leftVector;
-		}else{
+		}
+		else
+		{
 			curveVector = rightVector;
 		}
 
-		CurveAmplitude = (float)r.Next(0,5);
+		CurveAmplitude = (float)r.Next(0, 5);
 
 	}
 
@@ -91,20 +94,23 @@ public partial class Fireball : Node2D , ISpell
 	{
 		base._Process(delta);
 
-		if(!isCast){
+		if (!isCast)
+		{
 			return;
 		}
-			  
 
-		if(!FireballParticle.Emitting && !FireballExplosionParticle.Emitting){
+
+		if (!FireballParticle.Emitting && !FireballExplosionParticle.Emitting)
+		{
 			QueueFree();
 		}
 
-		if(FireballExplosionParticle.Emitting){
+		if (FireballExplosionParticle.Emitting)
+		{
 			return;
 		}
 
-		
+
 		if (collided)
 		{
 			CollideBox.Monitoring = false;
@@ -117,24 +123,30 @@ public partial class Fireball : Node2D , ISpell
 
 		GlobalPosition += direction * stat.Speed * (float)delta;
 		destoryTimer += (float)delta;
-		if(time < 1){
+		if (time < 1)
+		{
 			time += (float)delta;
-		}else{
+		}
+		else
+		{
 			time -= (float)delta;
 		}
-   		 float offset = Mathf.Sin(time * CurveFrequency) * CurveAmplitude;
+		float offset = Mathf.Sin(time * CurveFrequency) * CurveAmplitude;
 
 		GlobalPosition += curveVector * offset;
 
-		if(destoryTimer > 20f){
+		if (destoryTimer > 20f)
+		{
 			QueueFree();
 		}
 
-		
+
 	}
 
-	public void _on_collide_box_body_entered(Node Body){
-		if(Body.IsInGroup("Enemies")){
+	public void _on_collide_box_body_entered(Node Body)
+	{
+		if (Body.IsInGroup("Enemies"))
+		{
 			collided = true;
 		}
 	}

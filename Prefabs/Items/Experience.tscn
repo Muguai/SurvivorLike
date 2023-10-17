@@ -4,11 +4,13 @@
 [ext_resource type="Texture2D" uid="uid://s530x8okb82n" path="res://Art/ExperiencePoint.png" id="2_dcq54"]
 
 [node name="Experience" type="Node2D"]
+z_index = 5
 script = ExtResource("1_vdtac")
 ItemName = "Experience"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 self_modulate = Color(0.278431, 0.913725, 0.458824, 1)
+z_index = 5
 position = Vector2(-4.76837e-07, 9.53674e-07)
-scale = Vector2(0.454082, 0.54703)
+scale = Vector2(0.454082, 0.548879)
 texture = ExtResource("2_dcq54")

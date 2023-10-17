@@ -1,7 +1,8 @@
-public enum DamageSource{
-	Melee,
-	Range,
-	Magic,
-	Explosion,
-	None
+public enum DamageSource
+{
+    Melee,
+    Range,
+    Magic,
+    Explosion,
+    None
 }

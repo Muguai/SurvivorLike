@@ -206,13 +206,8 @@ libraries = {
 "": SubResource("AnimationLibrary_at1fe")
 }
 
-<<<<<<< HEAD
-[node name="health-component" parent="." instance=ExtResource("5_gy2om")]
-Hp = 1
-=======
 [node name="health-component" parent="." node_paths=PackedStringArray("flickerSprite") instance=ExtResource("5_gy2om")]
 Hp = 2.0
->>>>>>> 606b721a873c7100287659bbaec246cce4f3dde2
 DeathState = "PlayerDeath"
 flickerSprite = NodePath("../PlayerSprite")
 InvincibilityFrames = 3.0

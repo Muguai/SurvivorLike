@@ -2,7 +2,6 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-
 public partial class PassiveSystem : Node
 {
     private static PassiveSystem _instance;
@@ -12,11 +11,7 @@ public partial class PassiveSystem : Node
         get { return _instance; }
     }
 
-    private Dictionary<DamageType, PassiveUpgrade> passiveUpgradesByDamageType = new();
-    private Dictionary<DamageSource, PassiveUpgrade> passiveUpgradesByDamageSource = new();
-    private Dictionary<string, PassiveUpgrade> passiveUpgradesBySpellName = new();
-    
-    //List of Passives
+    private Dictionary<string, PassiveUpgrade> passiveUpgrades = new Dictionary<string, PassiveUpgrade>();
     private List<Passive> passives = new List<Passive>();
 
     public override void _Ready()
@@ -30,65 +25,64 @@ public partial class PassiveSystem : Node
             QueueFree();
         }
 
+        /*
+        string folderPath = "res://Scripts/Passives/PassiveResources/";
+        string[] files = Directory.GetFiles(folderPath);
 
-        PassiveUpgrade tempP = new PassiveUpgrade();
-        tempP.ExplosionSizeMultipler = 0.5f;
-        PassiveSystem.Instance.AddPassiveUpgrade("Fireball", tempP);
+        foreach (string file in files)
+        {
+            Resource resource = GD.Load(file) as Resource;
+
+            if (resource is Passive passiveScript)
+            {
+                Passive passiveInstance = (Passive)Activator.CreateInstance(passiveScript.GetType());
+
+                AddPassive(passiveInstance);
+            }
+        }
+
+        foreach(Passive p in GetRandomUniquePassives(3)){
+            GD.Print(p.ResourceName);
+        }
+        */
     }
 
-    public void AddPassiveUpgrade<T>(Dictionary<T, PassiveUpgrade> upgradesDictionary, T key, PassiveUpgrade passiveUpgrade)
+    public void AddPassiveUpgrade(string key, PassiveUpgrade passiveUpgrade)
     {
-        if (upgradesDictionary.ContainsKey(key))
+        if (passiveUpgrades.ContainsKey(key))
         {
-            PassiveUpgrade upgrades = upgradesDictionary[key];
+            PassiveUpgrade upgrades = passiveUpgrades[key];
             upgrades.AddUpgrades(passiveUpgrade);
-            upgradesDictionary[key] = upgrades;
+            passiveUpgrades[key] = upgrades;
         }
         else
         {
-            PassiveUpgrade upgrades = passiveUpgrade;
-            upgradesDictionary[key] = upgrades;
+            passiveUpgrades[key] = passiveUpgrade;
         }
     }
 
-    public void AddPassiveUpgrade(string spellName, PassiveUpgrade passiveUpgrade)
+    public void RemovePassiveUpgrade(string key, PassiveUpgrade passiveUpgrade)
     {
-        AddPassiveUpgrade(passiveUpgradesBySpellName, spellName, passiveUpgrade);
+        if (passiveUpgrades.TryGetValue(key, out PassiveUpgrade upgrades))
+        {
+            upgrades.RemoveUpgrades(passiveUpgrade);
+
+            if (upgrades.IsEmpty())
+            {
+                passiveUpgrades.Remove(key);
+            }
+            else
+            {
+                passiveUpgrades[key] = upgrades;
+            }
+        }
     }
 
-    public void AddPassiveUpgrade(DamageType type, PassiveUpgrade passiveUpgrade)
-    {
-        AddPassiveUpgrade(passiveUpgradesByDamageType, type, passiveUpgrade);
-    }
-
-    public void AddPassiveUpgrade(DamageSource source, PassiveUpgrade passiveUpgrade)
-    {
-        AddPassiveUpgrade(passiveUpgradesByDamageSource, source, passiveUpgrade);
-    }
-
-    public void AddPassive(Passive passive){
-        passives.Add(passive);
-    }
-
-    public PassiveUpgrade GetPassiveUpgrade(string spellName, Godot.Collections.Array<DamageType> types, Godot.Collections.Array<DamageSource> sources)
+    public PassiveUpgrade GetPassiveUpgrade(string key)
     {
         PassiveUpgrade passiveUpgrade = new PassiveUpgrade();
 
-        passiveUpgrade.AddUpgrades(GetPassiveUpgrade(spellName));
-
-        passiveUpgrade.AddUpgrades(GetPassiveUpgrade(types));
-
-        passiveUpgrade.AddUpgrades(GetPassiveUpgrade(sources));
-
-        return passiveUpgrade;
-    }
-
-    public PassiveUpgrade GetPassiveUpgrade(string spellName)
-    {
-        PassiveUpgrade passiveUpgrade = new PassiveUpgrade();
-        PassiveUpgrade value;
-
-        if (passiveUpgradesBySpellName.TryGetValue(spellName, out value))
+        if (passiveUpgrades.TryGetValue(key, out PassiveUpgrade value))
         {
             passiveUpgrade.AddUpgrades(value);
         }
@@ -96,37 +90,41 @@ public partial class PassiveSystem : Node
         return passiveUpgrade;
     }
 
-    public PassiveUpgrade GetPassiveUpgrade(Godot.Collections.Array<DamageType> types)
+    public void AddPassive(Passive passive)
     {
-
-        PassiveUpgrade passiveUpgrade = new PassiveUpgrade();
-        PassiveUpgrade value;
-
-        foreach (DamageType type in types)
-        {
-            if (passiveUpgradesByDamageType.TryGetValue(type, out value))
-            {
-                passiveUpgrade.AddUpgrades(value);
-            }
-        }
-
-        return passiveUpgrade;
+        passives.Add(passive);
     }
 
-    public PassiveUpgrade GetPassiveUpgrade(Godot.Collections.Array<DamageSource> sources)
+    public List<Passive> GetRandomUniquePassives(int count)
     {
-        PassiveUpgrade passiveUpgrade = new PassiveUpgrade();
-        PassiveUpgrade value;
 
-        foreach (DamageSource source in sources)
+
+        Random random = new Random();
+        List<Passive> availablePassives = new List<Passive>(passives);
+
+        if (count > availablePassives.Count)
         {
-            if (passiveUpgradesByDamageSource.TryGetValue(source, out value))
-            {
-                passiveUpgrade.AddUpgrades(value);
-            }
+            GD.Print("Passives is less than " + count + " long");
+            return availablePassives;
         }
 
-        return passiveUpgrade;
+        List<Passive> selectedPassives = new List<Passive>();
+        count = Mathf.Clamp(count, 0, availablePassives.Count);
+
+        while (selectedPassives.Count < count && availablePassives.Count > 0)
+        {
+            int randomIndex = random.Next(0, availablePassives.Count);
+            Passive selectedPassive = availablePassives[randomIndex];
+
+            if (!selectedPassives.Contains(selectedPassive))
+            {
+                selectedPassives.Add(selectedPassive);
+            }
+
+            availablePassives.RemoveAt(randomIndex);
+        }
+
+        return selectedPassives;
     }
+
 }
-
