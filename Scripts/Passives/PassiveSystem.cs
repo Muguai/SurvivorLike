@@ -1,6 +1,8 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.InteropServices;
 
 public partial class PassiveSystem : Node
 {
@@ -13,6 +15,7 @@ public partial class PassiveSystem : Node
 
     private Dictionary<string, PassiveUpgrade> passiveUpgrades = new Dictionary<string, PassiveUpgrade>();
     private List<Passive> passives = new List<Passive>();
+    private Dictionary<Passive, int> activePassives = new Dictionary<Passive, int>();
 
     public override void _Ready()
     {
@@ -25,26 +28,26 @@ public partial class PassiveSystem : Node
             QueueFree();
         }
 
-        /*
-        string folderPath = "res://Scripts/Passives/PassiveResources/";
+
+        string folderPath = "Scripts/Passives/PassiveResources/";
         string[] files = Directory.GetFiles(folderPath);
 
         foreach (string file in files)
         {
-            Resource resource = GD.Load(file) as Resource;
+            string passiveString = file.Substring(folderPath.Length)[..(file.Length - folderPath.Length - 3)];
 
-            if (resource is Passive passiveScript)
+            if (Type.GetType(passiveString).BaseType == Type.GetType("Passive"))
             {
-                Passive passiveInstance = (Passive)Activator.CreateInstance(passiveScript.GetType());
-
+                Passive passiveInstance = (Passive)Activator.CreateInstance(Type.GetType(passiveString));
                 AddPassive(passiveInstance);
             }
         }
 
-        foreach(Passive p in GetRandomUniquePassives(3)){
-            GD.Print(p.ResourceName);
+        foreach (Passive p in GetRandomUniquePassives(3))
+        {
+            AddActivePassive(p);
         }
-        */
+
     }
 
     public void AddPassiveUpgrade(string key, PassiveUpgrade passiveUpgrade)
@@ -90,6 +93,31 @@ public partial class PassiveSystem : Node
         return passiveUpgrade;
     }
 
+    public void AddActivePassive(Passive passive)
+    {
+        passive.AddPassive();
+        if (activePassives.ContainsKey(passive))
+        {
+            activePassives[passive] += 1;
+        }
+        else
+        {
+            activePassives[passive] = 1;
+        }
+    }
+
+    public void RemoveActivePassive(Passive passive)
+    {
+        if (activePassives.ContainsKey(passive))
+        {
+            passive.RemovePassive();
+            activePassives[passive] -= 1;
+            if(activePassives[passive] <= 0){
+                activePassives.Remove(passive);
+            }
+        }
+    }
+
     public void AddPassive(Passive passive)
     {
         passives.Add(passive);
@@ -104,7 +132,7 @@ public partial class PassiveSystem : Node
 
         if (count > availablePassives.Count)
         {
-            GD.Print("Passives is less than " + count + " long");
+            GD.Print("Passives is less than " + count + " long, Passive Length: " + availablePassives.Count);
             return availablePassives;
         }
 

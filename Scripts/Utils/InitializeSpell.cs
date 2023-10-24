@@ -11,6 +11,7 @@ public static class InitializeSpell
         PassiveUpgrade final = new PassiveUpgrade();
         PassiveSystem passiveSystem = PassiveSystem.Instance;
 
+
         foreach (DamageSource ds in stats.Sources)
         {
             final.AddUpgrades(passiveSystem.GetPassiveUpgrade(EnumHelper.EnumToString(ds)));
@@ -24,7 +25,8 @@ public static class InitializeSpell
         final.AddUpgrades(passiveSystem.GetPassiveUpgrade(spellNode.Name));
 
         ApplyUpgrade(spellNode, stats, final);
-        
+
+        final.ExecuteFunctions(spellNode);
     }
 
     private static void ApplyUpgrade(Node spellNode, Stats stats, PassiveUpgrade upgrade)
